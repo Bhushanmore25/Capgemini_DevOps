@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles2.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <h1>ATM</h1>
+        <p class="subtitle">Enter your account details to generate a receipt</p>
+      </div>
+      <form id="atm-form" novalidate>
+        <div class="form-row">
+          <label for="account">Account Number</label>
+          <input type="text" placeholder="e.g. xxxx1234" id="account" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email </label>
+          <input type="text" placeholder="e.g. abc@gmail.com" id="email" required>
+        </div>
+        <div class="form-row">
+          <label for="phone">Phone Number </label>
+          <input type="text" placeholder="e.g. xxxxxx1234" id="phone" required>
+        </div>
+        <div class="form-row">
+          <label for="pin">PIN</label>
+          <input type="password" placeholder="4-digit PIN" id="pin" required minlength="4" maxlength="8">
+        </div>
+        <div class="form-row">
+          <label for="main_balance">Main Balance</label>
+          <input type="number" placeholder="1000.00" id="main_balance" required min="0" step="0.01">
+        </div>
+        <div class="form-row">
+          <label for="withdraw">Withdraw Amount</label>
+          <input type="number" placeholder="0.00" id="withdraw" required min="0" step="0.01">
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="submit" class="btn primary">Withdraw</button>
+          <button type="reset" class="btn secondary">Reset</button>
+        </div>
+        <p class="error" id="error" aria-live="polite"></p>
+      </form>
+      </div>
+    <script>
+      const form = document.getElementById('atm-form');
+      const errorEl = document.getElementById('error');
+      function showError(msg){ errorEl.textContent = msg; errorEl.style.opacity = 1 }
+      function clearError(){ errorEl.textContent = ''; errorEl.style.opacity = 0 }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        clearError();
+        const account = document.getElementById('account').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const pin = document.getElementById('pin').value.trim();
+        const main_balance = parseFloat(document.getElementById('main_balance').value) || 0;
+        const withdraw = parseFloat(document.getElementById('withdraw').value) || 0;
+        
+        if(!account){ alert('Please enter an account number.'); return }
+        if(account.length<12){ alert('Enter the account number of 12 digits'); return }
+        if(pin.length < 4){ alert('PIN must be at least 4 characters.'); return }
+        if(withdraw > main_balance){ alert('Withdraw amount cannot exceed main balance.'); return }
+
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('phoneNumber', phone);
+        sessionStorage.setItem('account', account);
+        sessionStorage.setItem('pin', pin);
+        sessionStorage.setItem('main_balance', String(main_balance.toFixed(2)));
+        sessionStorage.setItem('withdraw', String(withdraw.toFixed(2)));
+        window.location.href = 'index2.html';
+      });
+    </script>
+  </body>
+</html>

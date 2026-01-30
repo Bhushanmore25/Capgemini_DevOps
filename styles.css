@@ -1,0 +1,14 @@
+:root{ --card:#fff; --muted:#6b7280; --accent:#0891b2 }
+html,body{ height:100%; margin:0; font-family:'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial; background:linear-gradient(180deg,#f6f1ff,#eef7ff); display:flex; align-items:center; justify-content:center }
+.main{ width:420px; background:var(--card); border-radius:14px; padding:26px; box-shadow:0 16px 40px rgba(16,24,40,0.10); display:flex; flex-direction:column; gap:12px }
+.header h1{ margin:0; font-size:20px }
+.header .subtitle{ margin:4px 0 0; color:var(--muted); font-size:13px }
+.dates, .account, .main_balance, .balance{ padding:10px 8px; border-radius:8px; background:linear-gradient(90deg,#f8fafc,#ffffff); display:flex; justify-content:space-between; align-items:center }
+.para{ margin:0; color:var(--muted) }
+.balance .para strong, .main_balance .para strong{ color:#111827 }
+.actions{ display:flex; gap:10px }
+.btn{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:600 }
+.btn.primary{ background:linear-gradient(90deg,#0891b2,#0369a1); color:#fff }
+.btn.secondary{ background:transparent; border:1px solid #e6e6f0; color:var(--muted) }
+.greet{ text-align:center; color:var(--muted); padding-top:6px }
+@media (max-width:480px){ .main{ width:92% } }

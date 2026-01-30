@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="main">
+        <div class="header">
+            <h1>ATM Receipt</h1>
+            <p class="subtitle">Thank you for using our service</p>
+        </div>
+        <div class="dates">
+            <p class="para">Date: <strong><span id="date">--/--/----</span></strong></p>
+            <p class="para">Time: <strong><span id="time">--:--:--</span></strong></p>
+        </div>
+        <div class="account">
+            <p class="para">A/C: <strong><span id="account">xxxx1234</span></strong></p>
+            <p class="para">PIN: <strong><span id="pin">xxxx</span></strong></p>
+        </div>
+        <div class="main_balance">
+            <p class="para">MAIN BALANCE: <strong><span id="main_balance">0.00</span></strong></p>
+            <p class="para">WITHDRAW: <strong><span id="withdraw">0.00</span></strong></p>
+        </div>
+        <div class="balance">
+            <p class="para">BALANCE: <strong><span id="balance">0.00</span></strong></p>
+        </div>
+        <div class="actions">
+          <button id="btn-print" class="btn primary">Print</button>
+          <button id="btn-new" class="btn secondary">New Transaction</button>
+          <a href="emailLink" target="_blank" class="btn secondary" id="sendEmail">Send Email</a>
+          <a href="abc" target="_blank" class="btn secondary" id="sendTel">Send SMS</a>
+        </div>
+        <div class="greet">Have a nice day!</div>
+    </div>
+    <script>
+      function pad(n){ return n < 10 ? '0' + n : n }
+      function formatDate(d){ return pad(d.getMonth()+1) + '/' + pad(d.getDate()) + '/' + d.getFullYear() }
+      function formatTime(d){ return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) }
+
+      const now = new Date();
+      document.getElementById('date').textContent = formatDate(now);
+      document.getElementById('time').textContent = formatTime(now);
+
+      const account = sessionStorage.getItem('account') || 'xxxx1234';
+      const phoneNumber = sessionStorage.getItem('phoneNumber') || 'xxxxxx1234';
+      const email= sessionStorage.getItem('email') || 'abc@gmail.com';
+      const pin = sessionStorage.getItem('pin') || 'xxxx';
+      const main_balance = parseFloat(sessionStorage.getItem('main_balance')) || 0;
+      const withdraw = parseFloat(sessionStorage.getItem('withdraw')) || 0;
+      const balance = main_balance - withdraw;
+
+      document.getElementById('account').textContent = account;
+      const maskedPin = pin ? pin.replace(/.(?=.{2})/g, 'x') : pin;
+      document.getElementById('pin').textContent = maskedPin;
+      document.getElementById('main_balance').textContent = main_balance.toFixed(2);
+      document.getElementById('withdraw').textContent = withdraw.toFixed(2);
+      document.getElementById('balance').textContent = balance.toFixed(2);
+      const balEl = document.getElementById('balance');
+      const emailLink= `mailto:${email}?cc=ATM@gmail.com&bcc=contact@xyz.org&subject=Mail to Bank Balance&body=Main Balance=${main_balance} Withdrawal amount=${withdraw} Balance=${balance}`
+      document.getElementById("sendEmail").setAttribute("href", emailLink);
+      const phoneLink=`sms:+91${phoneNumber}?body=Main Balance=${main_balance} Withdrawal amount=${withdraw} Balance=${balance}`
+      document.getElementById("sendTel").setAttribute("href", phoneLink);
+      if(balance < 0){ balEl.style.color = '#ef4444' }
+      document.getElementById('btn-print').addEventListener('click', function(){ window.print() });
+      document.getElementById('btn-new').addEventListener('click', function(){ sessionStorage.clear(); window.location.href = 'index.html' });
+    </script>
+    </div>
+  </body>
+</html>
