@@ -1,0 +1,12 @@
+- for initilization of git 
+git init
+
+-for adding files to git
+git add filename
+
+- commit
+git commit -m "Message"
+
+git branch -m "main"
+git remote add origin https://github.com/Bhushanmore25/Capgemini_DevOps.git
+git push origin main
